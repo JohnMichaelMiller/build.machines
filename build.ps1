@@ -25,8 +25,11 @@ function Write-GistFiles {
 }
 
 #write-output "start $($MyInvocation.MyCommand.Source) $MachineType"
-#[object]$this.json = $null 
+
 $gistRepoPath = '..\2573a7affd2021a946d2b767c6579f87'
+
+if (!(test-path json)) {mkdir json}
+if (!(test-path code)) {mkdir code}
 
 class BaseMachine {
     [bool] $WindowsBaseSoftware = $true
