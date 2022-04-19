@@ -174,6 +174,7 @@ class DevMachine : ProductivityMachine {
                 $this.AddPackage('Docker.DockerDesktop')
                 $this.AddCode('vscode-docker')
             }
+            $this.AddCode($(Get-Content '.\clone-repos.ps1' -raw))
             write-debug "writing intermediate dev json($($this.json | ConvertTo-Json -depth 32 > '.\json\dev.machine.json'))"
             write-debug "writing intermediate dev code($($this.code > '.\code\dev.machine.ps1'))"
             write-output 'end DevMachine()'
