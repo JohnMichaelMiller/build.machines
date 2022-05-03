@@ -222,6 +222,23 @@ class CloudDevMachine : DevMachine {
     }    
 }
 
+
+class FlexionDevMachine : CloudDevMachine {
+    [bool] $CloudDevSoftware = $true
+    [bool] $InstallAzure = $false
+    [bool] $InstallAWS = $true
+    FlexionDevMachine() : base() {
+        write-output 'start FlexionDevMachine()'
+        if ($this.CloudDevSoftware) { 
+            $this.AddPackage('AgileBits.1Password')
+        }
+        
+        write-debug "writing intermediate cloud dev json($($this.json | ConvertTo-Json -depth 32 > '.\json\flexion.dev.machine.json'))"
+        write-debug "writing intermediate cloud dev code($($this.code > '.\code\flexion.dev.machine.ps1'))"
+        write-output 'end FlexionDevMachine()'
+    }    
+}
+
 switch ($MachineType) {
     
     { ($_ -eq 'all' -or $_ -eq 'plato') } {
@@ -229,7 +246,7 @@ switch ($MachineType) {
         Write-GistFiles -Object $o -MachineType 'plato' -GistPath $gistRepoPath
     }
     { ($_ -eq 'all' -or $_ -eq 'galileo') } {
-        $o = New-Object CloudDevMachine
+        $o = New-Object FlexionDevMachine
         Write-GistFiles -Object $o -MachineType 'galileo' -GistPath $gistRepoPath
     }
     { ($_ -eq 'all' -or $_ -eq 'socrates') } {
